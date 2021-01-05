@@ -6,7 +6,8 @@ import { UserListComponent } from "./user-list/user-list.component";
 import { RouterModule } from "@angular/router";
 import { APP_ROUTES } from "./app.routing";
 import { UserFormComponent } from "./user-form/user-form.component";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { ReqInterceptor } from "./http.interceptor";
 
 @NgModule({
   imports: [
@@ -18,6 +19,12 @@ import { HttpClientModule } from "@angular/common/http";
   ],
   declarations: [AppComponent, UserListComponent, UserFormComponent],
   bootstrap: [AppComponent],
-  providers: []
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ReqInterceptor,
+      multi: true
+    }
+  ]
 })
 export class AppModule {}
