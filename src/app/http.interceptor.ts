@@ -13,6 +13,9 @@ export class ReqInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    return next.handle(req);
+    const reqClone = req.clone({
+      headers: req.headers.set("Authorization", "Bearer 12345")
+    });
+    return next.handle(reqClone);
   }
 }
